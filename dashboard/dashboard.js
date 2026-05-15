@@ -7,76 +7,76 @@ const fmt = (d) => d.toISOString().slice(0, 10);
 const addDays = (d, n) => { const r = new Date(d); r.setDate(r.getDate() + n); return r; };
 
 const RAW_PRODUCTS = [
-  { id:'PRD-001', name:'Молоко 3.2%',       category:'Молочные',     quantity:142, expiry: fmt(addDays(today,-3)),  status:'active' },
-  { id:'PRD-002', name:'Кефир 1%',           category:'Молочные',     quantity:5,   expiry: fmt(addDays(today, 4)),  status:'active' },
-  { id:'PRD-003', name:'Куриная грудка',     category:'Мясо',         quantity:0,   expiry: fmt(addDays(today, 2)),  status:'out' },
-  { id:'PRD-004', name:'Говядина (вырезка)', category:'Мясо',         quantity:34,  expiry: fmt(addDays(today, 6)),  status:'active' },
-  { id:'PRD-005', name:'Сок яблочный 1л',   category:'Напитки',      quantity:210, expiry: fmt(addDays(today,120)), status:'active' },
-  { id:'PRD-006', name:'Вода газированная',  category:'Напитки',      quantity:7,   expiry: fmt(addDays(today,365)), status:'active' },
-  { id:'PRD-007', name:'Шоколад молочный',   category:'Кондитерские', quantity:0,   expiry: fmt(addDays(today, 90)), status:'discontinued' },
-  { id:'PRD-008', name:'Пельмени сибирские', category:'Заморозка',    quantity:88,  expiry: fmt(addDays(today,180)), status:'active' },
-  { id:'PRD-009', name:'Пицца замороженная', category:'Заморозка',    quantity:4,   expiry: fmt(addDays(today, 60)), status:'active' },
-  { id:'PRD-010', name:'Греча',              category:'Бакалея',      quantity:320, expiry: fmt(addDays(today,400)), status:'active' },
-  { id:'PRD-011', name:'Рис длиннозёрный',   category:'Бакалея',      quantity:6,   expiry: fmt(addDays(today,300)), status:'active' },
-  { id:'PRD-012', name:'Масло сливочное',    category:'Молочные',     quantity:0,   expiry: fmt(addDays(today,-1)),  status:'out' },
-  { id:'PRD-013', name:'Творог 5%',          category:'Молочные',     quantity:18,  expiry: fmt(addDays(today, 3)),  status:'active' },
-  { id:'PRD-014', name:'Сыр гауда',          category:'Молочные',     quantity:55,  expiry: fmt(addDays(today, 25)), status:'active' },
-  { id:'PRD-015', name:'Свинина рёбра',      category:'Мясо',         quantity:3,   expiry: fmt(addDays(today, 5)),  status:'active' },
-  { id:'PRD-016', name:'Йогурт натуральный', category:'Молочные',     quantity:0,   expiry: fmt(addDays(today,-5)),  status:'out' },
-  { id:'PRD-017', name:'Газировка Cola 0.5', category:'Напитки',      quantity:500, expiry: fmt(addDays(today,200)), status:'active' },
-  { id:'PRD-018', name:'Чай чёрный 100п.',   category:'Бакалея',      quantity:74,  expiry: fmt(addDays(today,700)), status:'active' },
-  { id:'PRD-019', name:'Конфеты ассорти',    category:'Кондитерские', quantity:2,   expiry: fmt(addDays(today, 45)), status:'active' },
-  { id:'PRD-020', name:'Рыба хек',           category:'Заморозка',    quantity:0,   expiry: fmt(addDays(today, 90)), status:'discontinued' },
+  { id: 'PRD-001', name: 'Молоко 3.2%', category: 'Молочные', quantity: 142, expiry: fmt(addDays(today, -3)), status: 'active' },
+  { id: 'PRD-002', name: 'Кефир 1%', category: 'Молочные', quantity: 5, expiry: fmt(addDays(today, 4)), status: 'active' },
+  { id: 'PRD-003', name: 'Куриная грудка', category: 'Мясо', quantity: 0, expiry: fmt(addDays(today, 2)), status: 'out' },
+  { id: 'PRD-004', name: 'Говядина (вырезка)', category: 'Мясо', quantity: 34, expiry: fmt(addDays(today, 6)), status: 'active' },
+  { id: 'PRD-005', name: 'Сок яблочный 1л', category: 'Напитки', quantity: 210, expiry: fmt(addDays(today, 120)), status: 'active' },
+  { id: 'PRD-006', name: 'Вода газированная', category: 'Напитки', quantity: 7, expiry: fmt(addDays(today, 365)), status: 'active' },
+  { id: 'PRD-007', name: 'Шоколад молочный', category: 'Кондитерские', quantity: 0, expiry: fmt(addDays(today, 90)), status: 'discontinued' },
+  { id: 'PRD-008', name: 'Пельмени сибирские', category: 'Заморозка', quantity: 88, expiry: fmt(addDays(today, 180)), status: 'active' },
+  { id: 'PRD-009', name: 'Пицца замороженная', category: 'Заморозка', quantity: 4, expiry: fmt(addDays(today, 60)), status: 'active' },
+  { id: 'PRD-010', name: 'Греча', category: 'Бакалея', quantity: 320, expiry: fmt(addDays(today, 400)), status: 'active' },
+  { id: 'PRD-011', name: 'Рис длиннозёрный', category: 'Бакалея', quantity: 6, expiry: fmt(addDays(today, 300)), status: 'active' },
+  { id: 'PRD-012', name: 'Масло сливочное', category: 'Молочные', quantity: 0, expiry: fmt(addDays(today, -1)), status: 'out' },
+  { id: 'PRD-013', name: 'Творог 5%', category: 'Молочные', quantity: 18, expiry: fmt(addDays(today, 3)), status: 'active' },
+  { id: 'PRD-014', name: 'Сыр гауда', category: 'Молочные', quantity: 55, expiry: fmt(addDays(today, 25)), status: 'active' },
+  { id: 'PRD-015', name: 'Свинина рёбра', category: 'Мясо', quantity: 3, expiry: fmt(addDays(today, 5)), status: 'active' },
+  { id: 'PRD-016', name: 'Йогурт натуральный', category: 'Молочные', quantity: 0, expiry: fmt(addDays(today, -5)), status: 'out' },
+  { id: 'PRD-017', name: 'Газировка Cola 0.5', category: 'Напитки', quantity: 500, expiry: fmt(addDays(today, 200)), status: 'active' },
+  { id: 'PRD-018', name: 'Чай чёрный 100п.', category: 'Бакалея', quantity: 74, expiry: fmt(addDays(today, 700)), status: 'active' },
+  { id: 'PRD-019', name: 'Конфеты ассорти', category: 'Кондитерские', quantity: 2, expiry: fmt(addDays(today, 45)), status: 'active' },
+  { id: 'PRD-020', name: 'Рыба хек', category: 'Заморозка', quantity: 0, expiry: fmt(addDays(today, 90)), status: 'discontinued' },
 ];
 
 // ─── STATE ────────────────────────────────────────────────────────────────────
 const state = {
   products: [...RAW_PRODUCTS],
-  filtered:  [...RAW_PRODUCTS],
-  search:    '',
+  filtered: [...RAW_PRODUCTS],
+  search: '',
   statusFilter: '',
   expiryFilter: '',
-  sortCol:   'id',
-  sortDir:   'asc',
-  page:      1,
-  pageSize:  8,
-  editId:    null,
+  sortCol: 'id',
+  sortDir: 'asc',
+  page: 1,
+  pageSize: 8,
+  editId: null,
 };
 
 // ─── DOM refs ─────────────────────────────────────────────────────────────────
-const $  = (id) => document.getElementById(id);
+const $ = (id) => document.getElementById(id);
 const $$ = (sel, ctx = document) => ctx.querySelectorAll(sel);
 
 // ─── DATE HELPERS ─────────────────────────────────────────────────────────────
 function setCurrentDate() {
-  const opts = { day:'numeric', month:'long', year:'numeric' };
+  const opts = { day: 'numeric', month: 'long', year: 'numeric' };
   $('currentDate').textContent = today.toLocaleDateString('ru-RU', opts);
 }
 
 function expiryStatus(dateStr) {
   const d = new Date(dateStr);
   const diff = Math.ceil((d - today) / 86400000);
-  if (diff < 0)  return 'expired';
+  if (diff < 0) return 'expired';
   if (diff <= 7) return 'expiring';
   return 'ok';
 }
 
 function fmtDateRu(dateStr) {
-  return new Date(dateStr).toLocaleDateString('ru-RU', { day:'2-digit', month:'2-digit', year:'numeric' });
+  return new Date(dateStr).toLocaleDateString('ru-RU', { day: '2-digit', month: '2-digit', year: 'numeric' });
 }
 
 // ─── KPI CARDS ────────────────────────────────────────────────────────────────
 function renderKPIs() {
   const products = state.products;
-  const total      = products.length;
-  const expiring   = products.filter(p => ['expired','expiring'].includes(expiryStatus(p.expiry))).length;
-  const lowStock   = products.filter(p => p.quantity > 0 && p.quantity < 10).length;
-  const revenue    = (Math.random() * 200000 + 800000).toFixed(0);
+  const total = products.length;
+  const expiring = products.filter(p => ['expired', 'expiring'].includes(expiryStatus(p.expiry))).length;
+  const lowStock = products.filter(p => p.quantity > 0 && p.quantity < 10).length;
+  const revenue = (Math.random() * 200000 + 800000).toFixed(0);
 
-  $('kpiTotalVal').textContent    = total;
+  $('kpiTotalVal').textContent = total;
   $('kpiExpiringVal').textContent = expiring;
-  $('kpiLowVal').textContent      = lowStock;
-  $('kpiRevenueVal').textContent  = '₽ ' + Number(revenue).toLocaleString('ru-RU');
+  $('kpiLowVal').textContent = lowStock;
+  $('kpiRevenueVal').textContent = '₽ ' + Number(revenue).toLocaleString('ru-RU');
 }
 
 // ─── SPARKLINES ───────────────────────────────────────────────────────────────
@@ -101,10 +101,10 @@ function drawSparkline(id, data, color) {
 }
 
 function renderSparklines() {
-  drawSparkline('sparkline1', [130,135,138,136,140,139,142], '#2563EB');
-  drawSparkline('sparkline2', [2,4,3,5,6,7,8],               '#D97706');
-  drawSparkline('sparkline3', [9,7,8,6,5,7,6],               '#DC2626');
-  drawSparkline('sparkline4', [720000,780000,810000,760000,820000,850000,880000], '#16A34A');
+  drawSparkline('sparkline1', [130, 135, 138, 136, 140, 139, 142], '#2563EB');
+  drawSparkline('sparkline2', [2, 4, 3, 5, 6, 7, 8], '#D97706');
+  drawSparkline('sparkline3', [9, 7, 8, 6, 5, 7, 6], '#DC2626');
+  drawSparkline('sparkline4', [720000, 780000, 810000, 760000, 820000, 850000, 880000], '#16A34A');
 }
 
 // ─── SALES CHART ──────────────────────────────────────────────────────────────
@@ -114,7 +114,7 @@ function genSalesData(days) {
   const labels = [], sales = [], returns = [];
   for (let i = days - 1; i >= 0; i--) {
     const d = addDays(today, -i);
-    labels.push(d.toLocaleDateString('ru-RU', { day:'numeric', month:'short' }));
+    labels.push(d.toLocaleDateString('ru-RU', { day: 'numeric', month: 'short' }));
     sales.push(Math.round(Math.random() * 80000 + 60000));
     returns.push(Math.round(Math.random() * 8000 + 2000));
   }
@@ -159,7 +159,7 @@ function renderSalesChart(period = 7) {
     },
     options: {
       responsive: true, maintainAspectRatio: false,
-      interaction: { mode:'index', intersect: false },
+      interaction: { mode: 'index', intersect: false },
       plugins: {
         legend: {
           position: 'top',
@@ -201,8 +201,8 @@ function renderCategoryChart() {
   });
   const labels = Object.keys(cats);
   const values = Object.values(cats);
-  const colors = ['#2563EB','#16A34A','#D97706','#8B5CF6','#EC4899','#0891B2'];
-  const total  = values.reduce((a,b) => a + b, 0);
+  const colors = ['#2563EB', '#16A34A', '#D97706', '#8B5CF6', '#EC4899', '#0891B2'];
+  const total = values.reduce((a, b) => a + b, 0);
 
   if (catChartInst) catChartInst.destroy();
   catChartInst = new Chart($('categoryChart').getContext('2d'), {
@@ -210,10 +210,12 @@ function renderCategoryChart() {
     data: { labels, datasets: [{ data: values, backgroundColor: colors, borderWidth: 2, borderColor: '#fff', hoverOffset: 6 }] },
     options: {
       responsive: true, maintainAspectRatio: false, cutout: '68%',
-      plugins: { legend: { display: false }, tooltip: {
-        backgroundColor: '#111827',
-        callbacks: { label: (c) => ` ${c.label}: ${Math.round(c.raw/total*100)}%` },
-      }},
+      plugins: {
+        legend: { display: false }, tooltip: {
+          backgroundColor: '#111827',
+          callbacks: { label: (c) => ` ${c.label}: ${Math.round(c.raw / total * 100)}%` },
+        }
+      },
     },
   });
 
@@ -222,7 +224,7 @@ function renderCategoryChart() {
     <li class="legend-item">
       <span class="legend-dot" style="background:${colors[i]}"></span>
       ${l}
-      <span class="legend-pct">${Math.round(values[i]/total*100)}%</span>
+      <span class="legend-pct">${Math.round(values[i] / total * 100)}%</span>
     </li>
   `).join('');
 }
@@ -241,9 +243,9 @@ function applyFilters() {
   list.sort((a, b) => {
     let va = a[state.sortCol], vb = b[state.sortCol];
     if (state.sortCol === 'quantity') { va = +va; vb = +vb; }
-    if (state.sortCol === 'expiry')   { va = new Date(va); vb = new Date(vb); }
+    if (state.sortCol === 'expiry') { va = new Date(va); vb = new Date(vb); }
     if (va < vb) return state.sortDir === 'asc' ? -1 : 1;
-    if (va > vb) return state.sortDir === 'asc' ?  1 : -1;
+    if (va > vb) return state.sortDir === 'asc' ? 1 : -1;
     return 0;
   });
 
@@ -254,14 +256,14 @@ function applyFilters() {
 
 // ─── TABLE ────────────────────────────────────────────────────────────────────
 const STATUS_MAP = {
-  active:       { label: 'В продаже',         cls: 'status-active' },
-  out:          { label: 'Нет в наличии',      cls: 'status-out' },
+  active: { label: 'В продаже', cls: 'status-active' },
+  out: { label: 'Нет в наличии', cls: 'status-out' },
   discontinued: { label: 'Снят с производства', cls: 'status-discontinued' },
 };
 const EXPIRY_MAP = {
-  expired:  { cls: 'expiry-expired',  icon: '🔴' },
+  expired: { cls: 'expiry-expired', icon: '🔴' },
   expiring: { cls: 'expiry-expiring', icon: '🟡' },
-  ok:       { cls: 'expiry-ok',       icon: '🟢' },
+  ok: { cls: 'expiry-ok', icon: '🟢' },
 };
 
 function renderTable() {
@@ -342,7 +344,7 @@ function renderPagination(total, page, pages) {
 
   const nums = $('pageNumbers');
   nums.innerHTML = '';
-  const range = [...new Set([1, page - 1, page, page + 1, pages].filter(n => n >= 1 && n <= pages))].sort((a,b)=>a-b);
+  const range = [...new Set([1, page - 1, page, page + 1, pages].filter(n => n >= 1 && n <= pages))].sort((a, b) => a - b);
   let prev = 0;
   range.forEach(n => {
     if (prev && n - prev > 1) {
@@ -373,11 +375,11 @@ function updateSortHeaders() {
 function openModal(product = null) {
   state.editId = product ? product.id : null;
   $('modalTitle').textContent = product ? 'Редактировать товар' : 'Добавить товар';
-  $('mProductName').value = product ? product.name     : '';
-  $('mQuantity').value    = product ? product.quantity : '';
-  $('mExpiry').value      = product ? product.expiry   : '';
-  $('mStatus').value      = product ? product.status   : 'active';
-  $('mCategory').value    = product ? product.category : 'Молочные';
+  $('mProductName').value = product ? product.name : '';
+  $('mQuantity').value = product ? product.quantity : '';
+  $('mExpiry').value = product ? product.expiry : '';
+  $('mStatus').value = product ? product.status : 'active';
+  $('mCategory').value = product ? product.category : 'Молочные';
   $('modalOverlay').classList.remove('hidden');
   $('mProductName').focus();
 }
@@ -385,10 +387,10 @@ function openModal(product = null) {
 function closeModal() { $('modalOverlay').classList.add('hidden'); }
 
 function saveModal() {
-  const name     = $('mProductName').value.trim();
+  const name = $('mProductName').value.trim();
   const quantity = parseInt($('mQuantity').value, 10);
-  const expiry   = $('mExpiry').value;
-  const status   = $('mStatus').value;
+  const expiry = $('mExpiry').value;
+  const status = $('mStatus').value;
   const category = $('mCategory').value;
 
   if (!name) { showToast('Введите название товара', 'warn'); return; }
@@ -472,7 +474,7 @@ function initEvents() {
 
   // table actions (delegated)
   $('tableBody').addEventListener('click', (e) => {
-    const editBtn   = e.target.closest('.edit-btn');
+    const editBtn = e.target.closest('.edit-btn');
     const deleteBtn = e.target.closest('.delete-btn');
     if (editBtn) {
       const id = editBtn.dataset.id;
@@ -480,7 +482,7 @@ function initEvents() {
     }
     if (deleteBtn) {
       const id = deleteBtn.dataset.id;
-      const p  = state.products.find(p => p.id === id);
+      const p = state.products.find(p => p.id === id);
       if (confirm(`Удалить «${p?.name}»?`)) {
         state.products = state.products.filter(p => p.id !== id);
         applyFilters();
@@ -517,6 +519,28 @@ function initEvents() {
     });
   }
 }
+
+// ─── INIT ─────────────────────────────────────────────────────────────────────
+function init() {
+  setCurrentDate();
+  renderKPIs();
+  renderSparklines();
+  renderSalesChart(7);
+  renderCategoryChart();
+  applyFilters();
+  initEvents();
+}
+
+document.addEventListener('DOMContentLoaded', init);
+
+
+const mapControlBtn = $('mapControlBtn');
+if (mapControlBtn) {
+  mapControlBtn.addEventListener('click', () => {
+    window.location.href = '../map tracking/index.html';
+  });
+}
+
 
 // ─── INIT ─────────────────────────────────────────────────────────────────────
 function init() {
