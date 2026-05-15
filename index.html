@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="ru">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Navigation and Staff Tasks</title>
+		<link rel="stylesheet" href="style.css" />
+	</head>
+	<body>
+		<div class="app">
+			<header class="topbar">
+				<div>
+					<p class="eyebrow">Store Command</p>
+					<h1>Navigation and Staff Tasks</h1>
+				</div>
+				<div class="topbar-actions">
+					<button class="ghost" id="toggleLegend">Show legend</button>
+				</div>
+			</header>
+
+			<main class="layout">
+				<section class="map-card">
+					<div class="map-view" id="mapView">
+						<div class="map-header">
+							<div>
+								<h2>Store Map</h2>
+								<p>GPS mock: live staff dots and cameras</p>
+							</div>
+							<button class="primary" id="openTasks">All tasks</button>
+						</div>
+
+						<div class="map" id="map">
+							<div class="map-grid"></div>
+							<div class="blueprint">
+								<div class="store-title">SuperMart Express</div>
+								<div class="room electronics" style="--x: 4%; --y: 10%; --w: 30%; --h: 30%;">
+									<span class="room-label">Electronics</span>
+									<div class="aisle" style="--x: 10%; --y: 20%; --w: 10%; --h: 60%;"></div>
+									<div class="aisle" style="--x: 30%; --y: 20%; --w: 10%; --h: 60%;"></div>
+									<div class="aisle" style="--x: 50%; --y: 20%; --w: 10%; --h: 60%;"></div>
+								</div>
+								<div class="room apparel" style="--x: 36%; --y: 10%; --w: 22%; --h: 30%;">
+									<span class="room-label">Apparel</span>
+									<div class="aisle" style="--x: 18%; --y: 18%; --w: 8%; --h: 64%;"></div>
+									<div class="aisle" style="--x: 42%; --y: 18%; --w: 8%; --h: 64%;"></div>
+									<div class="aisle" style="--x: 66%; --y: 18%; --w: 8%; --h: 64%;"></div>
+								</div>
+								<div class="room grocery" style="--x: 60%; --y: 10%; --w: 18%; --h: 30%;">
+									<span class="room-label">Grocery</span>
+									<div class="aisle" style="--x: 16%; --y: 16%; --w: 10%; --h: 68%;"></div>
+									<div class="aisle" style="--x: 42%; --y: 16%; --w: 10%; --h: 68%;"></div>
+									<div class="aisle" style="--x: 68%; --y: 16%; --w: 10%; --h: 68%;"></div>
+								</div>
+								<div class="room warehouse" style="--x: 80%; --y: 8%; --w: 16%; --h: 38%;">
+									<span class="room-label">Warehouse</span>
+									<div class="aisle" style="--x: 12%; --y: 18%; --w: 70%; --h: 10%;"></div>
+									<div class="aisle" style="--x: 12%; --y: 40%; --w: 70%; --h: 10%;"></div>
+									<div class="aisle" style="--x: 12%; --y: 62%; --w: 70%; --h: 10%;"></div>
+								</div>
+								<div class="room grocery" style="--x: 58%; --y: 52%; --w: 20%; --h: 18%;">
+									<span class="room-label">Grocery</span>
+									<div class="aisle" style="--x: 14%; --y: 20%; --w: 12%; --h: 60%;"></div>
+									<div class="aisle" style="--x: 38%; --y: 20%; --w: 12%; --h: 60%;"></div>
+									<div class="aisle" style="--x: 62%; --y: 20%; --w: 12%; --h: 60%;"></div>
+								</div>
+								<div class="room warehouse" style="--x: 80%; --y: 50%; --w: 16%; --h: 38%;">
+									<span class="room-label">Warehouse</span>
+									<div class="aisle" style="--x: 12%; --y: 18%; --w: 70%; --h: 10%;"></div>
+									<div class="aisle" style="--x: 12%; --y: 40%; --w: 70%; --h: 10%;"></div>
+									<div class="aisle" style="--x: 12%; --y: 62%; --w: 70%; --h: 10%;"></div>
+								</div>
+								<div class="checkout" style="--x: 8%; --y: 60%; --w: 44%; --h: 16%;">
+									<span class="room-label">Checkout (Registers 1-5)</span>
+									<div class="register" style="--x: 10%; --y: 55%;"></div>
+									<div class="register" style="--x: 26%; --y: 55%;"></div>
+									<div class="register" style="--x: 42%; --y: 55%;"></div>
+									<div class="register" style="--x: 58%; --y: 55%;"></div>
+									<div class="register" style="--x: 74%; --y: 55%;"></div>
+								</div>
+								<div class="room restrooms" style="--x: 6%; --y: 80%; --w: 26%; --h: 12%;">
+									<span class="room-label">Restrooms</span>
+								</div>
+								<div class="entrance" style="--x: 40%; --y: 82%; --w: 16%; --h: 10%;">
+									<span class="room-label">Entrance</span>
+									<div class="door"></div>
+								</div>
+								<div class="wall wall-v" style="--x: 52%; --y: 46%; --w: 1%; --h: 40%;"></div>
+								<div class="wall wall-h" style="--x: 36%; --y: 46%; --w: 22%; --h: 1%;"></div>
+							</div>
+							<div class="markers" id="markers"></div>
+						</div>
+
+						<div class="legend" id="legend">
+							<div class="legend-item">
+								<span class="dot employee"></span>
+								Staff
+							</div>
+							<div class="legend-item">
+								<span class="dot camera"></span>
+								Cameras
+							</div>
+							<div class="legend-item">
+								<span class="dot focus"></span>
+								Selected
+							</div>
+						</div>
+					</div>
+
+					<div class="tasks-panel" id="tasksView">
+						<div class="tasks-panel-header">
+							<div>
+								<h2>All tasks</h2>
+								<p>Status, assignee, and quick filters</p>
+							</div>
+							<button class="ghost" id="closeTasksPanel">Back to map</button>
+						</div>
+
+						<div class="filters">
+							<input type="text" id="searchInput" placeholder="Search by title" />
+							<select id="assigneeFilter">
+								<option value="">All assignees</option>
+							</select>
+							<select id="statusFilter">
+								<option value="">All statuses</option>
+								<option value="active">In progress</option>
+								<option value="pending">Pending</option>
+								<option value="done">Done</option>
+							</select>
+						</div>
+
+						<div class="tasks-table" id="tasksTable"></div>
+					</div>
+				</section>
+
+				<aside class="side-panel" id="sidePanel">
+					<div class="panel-header">
+						<h2 id="panelTitle">Select a point</h2>
+						<p id="panelSubtitle">Click a staff member or camera on the map</p>
+					</div>
+
+					<div class="panel-content" id="panelContent">
+						<div class="placeholder">
+							<div class="pulse"></div>
+							<p>Staff details and tasks will appear here</p>
+						</div>
+					</div>
+				</aside>
+			</main>
+		</div>
+
+		<script src="script.js"></script>
+	</body>
+</html>
