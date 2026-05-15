@@ -14,7 +14,9 @@
 					<h1>Navigation and Staff Tasks</h1>
 				</div>
 				<div class="topbar-actions">
-					<button class="ghost" id="toggleLegend">Show legend</button>
+					<button class="btn-dispatch" id="openDispatcher">🤖 AI Диспетчер</button>
+					<button class="ghost" id="openAllTasks">📋 All Tasks</button>
+					<button class="primary" id="backToDashboard">← Dashboard</button>
 				</div>
 			</header>
 
@@ -26,9 +28,6 @@
 								<div>
 									<h2>Store Map</h2>
 									<p>GPS mock: live staff dots and cameras</p>
-								</div>
-								<div class="topbar-actions">
-									<button class="ghost" id="backToDashboard">Back to dashboard</button>
 								</div>
 							</div>
 
@@ -154,7 +153,65 @@
 			</section>
 		</div>
 
+		<!-- All Tasks Modal -->
+		<div class="all-tasks-overlay hidden" id="allTasksOverlay">
+			<div class="all-tasks-modal">
+				<div class="all-tasks-header">
+					<div>
+						<h2>📋 All Assigned Tasks</h2>
+						<p>Tasks distributed to all staff members</p>
+					</div>
+					<button class="ghost" id="closeAllTasks">✕ Close</button>
+				</div>
+				<div class="all-tasks-filters">
+					<input type="text" id="allTasksSearch" placeholder="🔍 Search tasks..." />
+					<select id="allTasksEmployee">
+						<option value="">All employees</option>
+					</select>
+					<select id="allTasksStatus">
+						<option value="">All statuses</option>
+						<option value="active">In progress</option>
+						<option value="pending">Pending</option>
+						<option value="done">Done</option>
+					</select>
+				</div>
+				<div class="all-tasks-body" id="allTasksBody"></div>
+			</div>
+		</div>
+
+		<!-- AI Dispatcher Panel -->
+		<div class="dispatcher-overlay hidden" id="dispatcherPanel">
+			<div class="dispatcher-modal">
+				<div class="disp-header">
+					<div>
+						<h2 class="disp-title">🤖 AI Диспетчер задач</h2>
+						<p class="disp-subtitle">Gemini анализирует доступность и расположение сотрудников на карте</p>
+					</div>
+					<button class="disp-close" id="closeDispatcher">✕</button>
+				</div>
+				<div class="disp-mode-bar">
+					<span class="disp-mode-label">Режим:</span>
+					<div class="disp-mode-btns">
+						<button class="disp-mode-btn active" data-mode="proximity">📍 По близости</button>
+						<button class="disp-mode-btn" data-mode="balance">⚖️ Равномерно</button>
+					</div>
+					<button class="btn-assign-all primary" id="assignAllBtn">⚡ Назначить всё</button>
+				</div>
+				<div class="disp-body">
+					<div class="disp-section">
+						<h3 class="disp-section-title">👥 Сотрудники</h3>
+						<div class="disp-emp-grid" id="dispatchEmpGrid"></div>
+					</div>
+					<div class="disp-section">
+						<h3 class="disp-section-title">📋 Нераспределённые задачи</h3>
+						<div class="disp-task-list" id="dispatchTaskList"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+
 		<script src="../data.js"></script>
 		<script src="script.js"></script>
+		<script src="dispatcher.js"></script>
 	</body>
 </html>

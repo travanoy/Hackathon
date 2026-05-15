@@ -9,7 +9,7 @@ const panelContent       = document.getElementById("panelContent");
 const tasksSummary       = document.getElementById("tasksSummary");
 const priorityList       = document.getElementById("priorityList");
 const legend             = document.getElementById("legend");
-const toggleLegend       = document.getElementById("toggleLegend");
+
 const mapView            = document.getElementById("mapView");
 const tasksView          = document.getElementById("tasksView");
 const closeTasksPanel    = document.getElementById("closeTasksPanel");
@@ -18,6 +18,7 @@ const assigneeFilter     = document.getElementById("assigneeFilter");
 const statusFilter       = document.getElementById("statusFilter");
 const searchInput        = document.getElementById("searchInput");
 const backToDashboard    = document.getElementById("backToDashboard");
+const openAllTasksBtn    = document.getElementById("openAllTasks");
 
 let selectedMarkerId = null;
 
@@ -298,14 +299,7 @@ const toggleTasksPanel = (isOpen) => {
 
 // ─── Event listeners ──────────────────────────────────────────────────────────
 
-if (toggleLegend && legend) {
-	toggleLegend.addEventListener("click", () => {
-		legend.classList.toggle("hidden");
-		toggleLegend.textContent = legend.classList.contains("hidden")
-			? "Show legend"
-			: "Hide legend";
-	});
-}
+
 
 if (closeTasksPanel) {
 	closeTasksPanel.addEventListener("click", () => toggleTasksPanel(false));
@@ -329,3 +323,114 @@ if (backToDashboard) {
 renderManagerMarkers();
 populateAssignees();
 renderPriorityPreview();
+
+// ─── All Tasks Modal ──────────────────────────────────────────────────────────
+
+const allTasksOverlay  = document.getElementById("allTasksOverlay");
+const allTasksBody     = document.getElementById("allTasksBody");
+const allTasksSearchEl = document.getElementById("allTasksSearch");
+const allTasksEmpEl    = document.getElementById("allTasksEmployee");
+const allTasksStatusEl = document.getElementById("allTasksStatus");
+
+const STATUS_RU = { active: "In progress", pending: "Pending", done: "Done" };
+const STATUS_CLS = { active: "active", pending: "pending", done: "done" };
+
+function populateAllTasksFilters() {
+	if (!allTasksEmpEl) return;
+	allTasksEmpEl.innerHTML = `<option value="">All employees</option>`;
+	employees.forEach(e => {
+		const opt = document.createElement("option");
+		opt.value = e.id;
+		opt.textContent = e.name;
+		allTasksEmpEl.appendChild(opt);
+	});
+}
+
+function renderAllTasks() {
+	if (!allTasksBody) return;
+	const search = allTasksSearchEl?.value.trim().toLowerCase() || "";
+	const empFilter = allTasksEmpEl?.value || "";
+	const stFilter  = allTasksStatusEl?.value || "";
+
+	const rows = [];
+	employees.forEach(emp => {
+		if (empFilter && emp.id !== empFilter) return;
+		emp.tasks.forEach(task => {
+			if (stFilter && task.status !== stFilter) return;
+			if (search && !task.title.toLowerCase().includes(search) && !emp.name.toLowerCase().includes(search)) return;
+			rows.push({ emp, task });
+		});
+	});
+
+	if (!rows.length) {
+		allTasksBody.innerHTML = `<p style="color:#9ca3af;text-align:center;padding:32px">No tasks match the filters.</p>`;
+		return;
+	}
+
+	// Group by employee
+	const grouped = {};
+	rows.forEach(({ emp, task }) => {
+		if (!grouped[emp.id]) grouped[emp.id] = { emp, tasks: [] };
+		grouped[emp.id].tasks.push(task);
+	});
+
+	// Render — first group open, rest collapsed
+	allTasksBody.innerHTML = Object.values(grouped).map(({ emp, tasks }, idx) => `
+		<div class="at-group ${idx !== 0 ? 'at-collapsed' : ''}" data-empid="${emp.id}">
+			<div class="at-emp-header at-clickable" role="button" tabindex="0" aria-expanded="${idx === 0}">
+				<span class="at-avatar">${emp.name[0]}</span>
+				<div class="at-emp-info">
+					<strong>${emp.name}</strong>
+					<span class="at-emp-meta">${emp.role} · ${emp.zone} · <em>${emp.status}</em></span>
+				</div>
+				<span class="at-count">${tasks.length} task${tasks.length !== 1 ? 's' : ''}</span>
+				<span class="at-chevron" aria-hidden="true">
+					<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+				</span>
+			</div>
+			<div class="at-task-list">
+				${tasks.map(t => `
+					<div class="at-task-row">
+						<div>
+							<div class="at-task-title">${t.title}</div>
+							<div class="at-task-meta">${t.zone} · ${t.time}${t.assignedBy ? ' · <span class="at-ai-badge">🤖 AI</span>' : ''}</div>
+						</div>
+						<span class="status ${STATUS_CLS[t.status]}">${STATUS_RU[t.status]}</span>
+					</div>
+				`).join('')}
+			</div>
+		</div>
+	`).join('');
+
+	// Bind accordion clicks
+	allTasksBody.querySelectorAll('.at-emp-header.at-clickable').forEach(header => {
+		const toggle = () => {
+			const group = header.closest('.at-group');
+			const isCollapsed = group.classList.toggle('at-collapsed');
+			header.setAttribute('aria-expanded', String(!isCollapsed));
+		};
+		header.addEventListener('click', toggle);
+		header.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(); } });
+	});
+}
+
+function openAllTasksModal() {
+	if (!allTasksOverlay) return;
+	populateAllTasksFilters();
+	renderAllTasks();
+	allTasksOverlay.classList.remove("hidden");
+}
+
+function closeAllTasksModal() {
+	if (allTasksOverlay) allTasksOverlay.classList.add("hidden");
+}
+
+if (openAllTasksBtn) openAllTasksBtn.addEventListener("click", openAllTasksModal);
+const closeAllTasksBtn = document.getElementById("closeAllTasks");
+if (closeAllTasksBtn) closeAllTasksBtn.addEventListener("click", closeAllTasksModal);
+if (allTasksOverlay) allTasksOverlay.addEventListener("click", e => { if (e.target === allTasksOverlay) closeAllTasksModal(); });
+[allTasksSearchEl, allTasksEmpEl, allTasksStatusEl].filter(Boolean).forEach(el => {
+	el.addEventListener("input",  renderAllTasks);
+	el.addEventListener("change", renderAllTasks);
+});
+document.addEventListener("keydown", e => { if (e.key === "Escape") closeAllTasksModal(); });
