@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ProductHub — Дашборд менеджера</title>
+    <meta name="description" content="Современный дашборд для менеджеров продукта: KPI, аналитика продаж, управление товарами." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <link rel="stylesheet" href="dashboard.css" />
+  </head>
+  <body>
+    <!-- ===== HEADER ===== -->
+    <header class="header" id="appHeader">
+      <div class="header-brand">
+        <div class="brand-logo" aria-label="ProductHub logo">
+          <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="28" height="28" rx="8" fill="#2563EB"/>
+            <path d="M7 9h14M7 14h9M7 19h11" stroke="#fff" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div class="brand-text">
+          <span class="brand-name">ProductHub</span>
+          <span class="brand-sub">Управление товарами</span>
+        </div>
+      </div>
+
+      <nav class="header-nav" aria-label="Главное меню">
+        <a href="#" class="nav-link active" id="navDashboard">Дашборд</a>
+        <a href="#" class="nav-link" id="navProducts">Товары</a>
+        <a href="#" class="nav-link" id="navReports">Отчёты</a>
+        <a href="#" class="nav-link" id="navSettings">Настройки</a>
+      </nav>
+
+      <div class="header-profile">
+        <button class="notif-btn" id="notifBtn" aria-label="Уведомления" title="Уведомления">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
+            <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
+          </svg>
+          <span class="notif-badge" id="notifBadge">3</span>
+        </button>
+        <div class="profile-chip" id="profileChip" role="button" tabindex="0" aria-haspopup="true" aria-label="Профиль пользователя">
+          <div class="avatar">АС</div>
+          <div class="profile-info">
+            <span class="profile-name">Алексей Смирнов</span>
+            <span class="profile-role">Product Manager</span>
+          </div>
+          <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+      </div>
+    </header>
+
+    <!-- ===== MAIN ===== -->
+    <main class="main" id="mainContent">
+
+      <!-- Page Title -->
+      <div class="page-title-row">
+        <div>
+          <h1 class="page-title">Обзор дашборда</h1>
+          <p class="page-subtitle">Сегодня, <span id="currentDate"></span></p>
+        </div>
+        <button class="btn btn-primary" id="exportBtn">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Экспорт
+        </button>
+      </div>
+
+      <!-- ===== KPI CARDS ===== -->
+      <section class="kpi-grid" aria-label="Ключевые показатели">
+        <article class="kpi-card" id="kpiTotal">
+          <div class="kpi-icon kpi-icon--blue">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+          </div>
+          <div class="kpi-body">
+            <span class="kpi-label">Всего товаров</span>
+            <span class="kpi-value" id="kpiTotalVal">—</span>
+            <span class="kpi-delta kpi-delta--up" id="kpiTotalDelta">↑ 12 за месяц</span>
+          </div>
+          <div class="kpi-sparkline">
+            <canvas id="sparkline1" width="80" height="36"></canvas>
+          </div>
+        </article>
+
+        <article class="kpi-card" id="kpiExpiring">
+          <div class="kpi-icon kpi-icon--amber">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          </div>
+          <div class="kpi-body">
+            <span class="kpi-label">Истекает срок годности</span>
+            <span class="kpi-value" id="kpiExpiringVal">—</span>
+            <span class="kpi-delta kpi-delta--warn" id="kpiExpiringDelta">⚠ Требует внимания</span>
+          </div>
+          <div class="kpi-sparkline">
+            <canvas id="sparkline2" width="80" height="36"></canvas>
+          </div>
+        </article>
+
+        <article class="kpi-card" id="kpiLow">
+          <div class="kpi-icon kpi-icon--red">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+          </div>
+          <div class="kpi-body">
+            <span class="kpi-label">Мало на складе</span>
+            <span class="kpi-value" id="kpiLowVal">—</span>
+            <span class="kpi-delta kpi-delta--down" id="kpiLowDelta">↓ 3 пополнено</span>
+          </div>
+          <div class="kpi-sparkline">
+            <canvas id="sparkline3" width="80" height="36"></canvas>
+          </div>
+        </article>
+
+        <article class="kpi-card" id="kpiRevenue">
+          <div class="kpi-icon kpi-icon--green">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+          </div>
+          <div class="kpi-body">
+            <span class="kpi-label">Выручка за месяц</span>
+            <span class="kpi-value" id="kpiRevenueVal">—</span>
+            <span class="kpi-delta kpi-delta--up" id="kpiRevenueDelta">↑ 8.4% к прошлому месяцу</span>
+          </div>
+          <div class="kpi-sparkline">
+            <canvas id="sparkline4" width="80" height="36"></canvas>
+          </div>
+        </article>
+      </section>
+
+      <!-- ===== ANALYTICS ===== -->
+      <section class="analytics-grid" aria-label="Аналитика">
+        <div class="chart-card chart-card--main">
+          <div class="chart-header">
+            <div>
+              <h2 class="chart-title">Статистика продаж</h2>
+              <p class="chart-subtitle">Динамика за последние 30 дней</p>
+            </div>
+            <div class="chart-controls" role="group" aria-label="Период">
+              <button class="period-btn active" id="period7" data-period="7">7 дней</button>
+              <button class="period-btn" id="period30" data-period="30">30 дней</button>
+              <button class="period-btn" id="period90" data-period="90">Квартал</button>
+            </div>
+          </div>
+          <div class="chart-wrap">
+            <canvas id="salesChart" aria-label="График продаж"></canvas>
+          </div>
+        </div>
+
+        <div class="chart-card chart-card--side">
+          <div class="chart-header">
+            <div>
+              <h2 class="chart-title">По категориям</h2>
+              <p class="chart-subtitle">Доля категорий в продажах</p>
+            </div>
+          </div>
+          <div class="donut-wrap">
+            <canvas id="categoryChart" aria-label="График категорий"></canvas>
+          </div>
+          <ul class="legend-list" id="categoryLegend"></ul>
+        </div>
+      </section>
+
+      <!-- ===== TOOLBAR ===== -->
+      <section class="toolbar-section" aria-label="Панель управления таблицей">
+        <div class="toolbar">
+          <div class="search-wrap">
+            <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <input
+              type="search"
+              id="searchInput"
+              class="search-input"
+              placeholder="Поиск по названию товара..."
+              aria-label="Поиск товаров"
+              autocomplete="off"
+            />
+            <button class="search-clear hidden" id="searchClear" aria-label="Очистить поиск">✕</button>
+          </div>
+
+          <div class="filters-wrap">
+            <label class="sr-only" for="statusFilter">Статус</label>
+            <div class="select-wrap">
+              <select id="statusFilter" class="filter-select" aria-label="Фильтр по статусу">
+                <option value="">Все статусы</option>
+                <option value="active">В продаже</option>
+                <option value="out">Нет в наличии</option>
+                <option value="discontinued">Снят с производства</option>
+              </select>
+              <svg class="select-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+            </div>
+
+            <label class="sr-only" for="expiryFilter">Срок годности</label>
+            <div class="select-wrap">
+              <select id="expiryFilter" class="filter-select" aria-label="Фильтр по сроку годности">
+                <option value="">Все сроки</option>
+                <option value="expired">Просрочен</option>
+                <option value="expiring">Истекает (7 дней)</option>
+                <option value="ok">В порядке</option>
+              </select>
+              <svg class="select-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+            </div>
+
+            <button class="btn btn-ghost" id="resetFilters">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-3.51"/></svg>
+              Сбросить
+            </button>
+          </div>
+
+          <div class="toolbar-right">
+            <span class="results-count" id="resultsCount">Загрузка...</span>
+            <button class="btn btn-primary btn-sm" id="addProductBtn">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              Добавить
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== DATA TABLE ===== -->
+      <section class="table-section" aria-label="Таблица товаров">
+        <div class="table-card">
+          <div class="table-responsive">
+            <table class="data-table" id="productsTable" aria-label="Таблица товаров">
+              <thead>
+                <tr>
+                  <th class="th-sortable" data-col="id" scope="col">
+                    ID <span class="sort-icon" aria-hidden="true">↕</span>
+                  </th>
+                  <th class="th-sortable" data-col="name" scope="col">
+                    Название <span class="sort-icon" aria-hidden="true">↕</span>
+                  </th>
+                  <th class="th-sortable th-num" data-col="quantity" scope="col">
+                    Количество <span class="sort-icon" aria-hidden="true">↕</span>
+                  </th>
+                  <th class="th-sortable" data-col="expiry" scope="col">
+                    Срок годности <span class="sort-icon" aria-hidden="true">↕</span>
+                  </th>
+                  <th scope="col">Статус</th>
+                  <th scope="col">Действия</th>
+                </tr>
+              </thead>
+              <tbody id="tableBody">
+                <tr class="table-loading-row">
+                  <td colspan="6">
+                    <div class="skeleton-rows">
+                      <div class="skeleton-row"></div>
+                      <div class="skeleton-row"></div>
+                      <div class="skeleton-row"></div>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Pagination -->
+          <div class="table-footer">
+            <span class="pagination-info" id="paginationInfo">Строки 1–10 из 0</span>
+            <div class="pagination-controls">
+              <button class="page-btn" id="prevPage" aria-label="Предыдущая страница" disabled>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+              </button>
+              <div class="page-numbers" id="pageNumbers"></div>
+              <button class="page-btn" id="nextPage" aria-label="Следующая страница" disabled>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- ===== MODAL: Edit/Add Product ===== -->
+    <div class="modal-overlay hidden" id="modalOverlay" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <div class="modal">
+        <div class="modal-header">
+          <h2 class="modal-title" id="modalTitle">Редактировать товар</h2>
+          <button class="modal-close" id="modalClose" aria-label="Закрыть">✕</button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <label class="form-label" for="mProductName">Название товара</label>
+            <input type="text" id="mProductName" class="form-input" placeholder="Введите название" />
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="mQuantity">Количество</label>
+              <input type="number" id="mQuantity" class="form-input" placeholder="0" min="0" />
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="mExpiry">Срок годности</label>
+              <input type="date" id="mExpiry" class="form-input" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="mStatus">Статус</label>
+            <div class="select-wrap select-wrap--full">
+              <select id="mStatus" class="form-input">
+                <option value="active">В продаже</option>
+                <option value="out">Нет в наличии</option>
+                <option value="discontinued">Снят с производства</option>
+              </select>
+              <svg class="select-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="mCategory">Категория</label>
+            <div class="select-wrap select-wrap--full">
+              <select id="mCategory" class="form-input">
+                <option value="Молочные">Молочные продукты</option>
+                <option value="Мясо">Мясо и птица</option>
+                <option value="Напитки">Напитки</option>
+                <option value="Кондитерские">Кондитерские изделия</option>
+                <option value="Заморозка">Замороженные продукты</option>
+                <option value="Бакалея">Бакалея</option>
+              </select>
+              <svg class="select-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-ghost" id="modalCancel">Отмена</button>
+          <button class="btn btn-primary" id="modalSave">Сохранить</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== TOAST ===== -->
+    <div class="toast-container" id="toastContainer" aria-live="polite"></div>
+
+    <script src="dashboard.js"></script>
+  </body>
+</html>
