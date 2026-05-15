@@ -509,6 +509,13 @@ function initEvents() {
 
   // export (demo)
   $('exportBtn').addEventListener('click', () => showToast('Экспорт выполнен (демо)', 'success'));
+
+  const mapControlBtn = $('mapControlBtn');
+  if (mapControlBtn) {
+    mapControlBtn.addEventListener('click', () => {
+      window.location.href = '../map tracking/index.html';
+    });
+  }
 }
 
 // ─── INIT ─────────────────────────────────────────────────────────────────────

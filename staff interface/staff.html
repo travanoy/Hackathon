@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="ru">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Staff interface</title>
+		<link rel="stylesheet" href="staff.css" />
+	</head>
+	<body>
+		<div class="app">
+			<header class="topbar">
+				<div>
+					<p class="eyebrow">Store Command</p>
+					<h1>Staff interface</h1>
+				</div>
+				<div class="topbar-actions">
+					<button class="ghost" id="backToMain">Back to main</button>
+				</div>
+			</header>
+
+			<section class="view" id="employeeView">
+				<div class="employee-layout">
+					<section class="employee-left">
+						<div class="employee-header">
+							<div>
+								<h2>My tasks</h2>
+								<p>Tap a task to accept or complete</p>
+							</div>
+						</div>
+
+						<div class="employee-view" id="employeeTasksView">
+							<div class="task-list" id="employeeTaskList"></div>
+						</div>
+
+						<div class="employee-view hidden" id="employeeMapView">
+							<div class="map-toolbar">
+								<div>
+									<h3>Product search</h3>
+									<p>Find by name or SKU and highlight on map</p>
+								</div>
+								<div class="search-fields">
+									<input type="text" id="productName" placeholder="Product name" />
+									<input type="text" id="productId" placeholder="Product ID" />
+									<button class="ghost" id="clearProduct">Clear</button>
+								</div>
+								<p class="search-result" id="productResult">No product selected.</p>
+							</div>
+
+							<div class="map map-employee" id="employeeMap">
+								<div class="map-grid"></div>
+								<div class="blueprint">
+									<div class="store-title">SuperMart Express</div>
+									<div class="room electronics" style="--x: 4%; --y: 10%; --w: 30%; --h: 30%;">
+										<span class="room-label">Electronics</span>
+										<div class="aisle" style="--x: 10%; --y: 20%; --w: 10%; --h: 60%;"></div>
+										<div class="aisle" style="--x: 30%; --y: 20%; --w: 10%; --h: 60%;"></div>
+										<div class="aisle" style="--x: 50%; --y: 20%; --w: 10%; --h: 60%;"></div>
+									</div>
+									<div class="room apparel" style="--x: 36%; --y: 10%; --w: 22%; --h: 30%;">
+										<span class="room-label">Apparel</span>
+										<div class="aisle" style="--x: 18%; --y: 18%; --w: 8%; --h: 64%;"></div>
+										<div class="aisle" style="--x: 42%; --y: 18%; --w: 8%; --h: 64%;"></div>
+										<div class="aisle" style="--x: 66%; --y: 18%; --w: 8%; --h: 64%;"></div>
+									</div>
+									<div class="room grocery" style="--x: 60%; --y: 10%; --w: 18%; --h: 30%;">
+										<span class="room-label">Grocery</span>
+										<div class="aisle" style="--x: 16%; --y: 16%; --w: 10%; --h: 68%;"></div>
+										<div class="aisle" style="--x: 42%; --y: 16%; --w: 10%; --h: 68%;"></div>
+										<div class="aisle" style="--x: 68%; --y: 16%; --w: 10%; --h: 68%;"></div>
+									</div>
+									<div class="room warehouse" style="--x: 80%; --y: 8%; --w: 16%; --h: 38%;">
+										<span class="room-label">Warehouse</span>
+										<div class="aisle" style="--x: 12%; --y: 18%; --w: 70%; --h: 10%;"></div>
+										<div class="aisle" style="--x: 12%; --y: 40%; --w: 70%; --h: 10%;"></div>
+										<div class="aisle" style="--x: 12%; --y: 62%; --w: 70%; --h: 10%;"></div>
+									</div>
+									<div class="room grocery" style="--x: 58%; --y: 52%; --w: 20%; --h: 18%;">
+										<span class="room-label">Grocery</span>
+										<div class="aisle" style="--x: 14%; --y: 20%; --w: 12%; --h: 60%;"></div>
+										<div class="aisle" style="--x: 38%; --y: 20%; --w: 12%; --h: 60%;"></div>
+										<div class="aisle" style="--x: 62%; --y: 20%; --w: 12%; --h: 60%;"></div>
+									</div>
+									<div class="room warehouse" style="--x: 80%; --y: 50%; --w: 16%; --h: 38%;">
+										<span class="room-label">Warehouse</span>
+										<div class="aisle" style="--x: 12%; --y: 18%; --w: 70%; --h: 10%;"></div>
+										<div class="aisle" style="--x: 12%; --y: 40%; --w: 70%; --h: 10%;"></div>
+										<div class="aisle" style="--x: 12%; --y: 62%; --w: 70%; --h: 10%;"></div>
+									</div>
+									<div class="checkout" style="--x: 8%; --y: 60%; --w: 44%; --h: 16%;">
+										<span class="room-label">Checkout (Registers 1-5)</span>
+										<div class="register" style="--x: 10%; --y: 55%;"></div>
+										<div class="register" style="--x: 26%; --y: 55%;"></div>
+										<div class="register" style="--x: 42%; --y: 55%;"></div>
+										<div class="register" style="--x: 58%; --y: 55%;"></div>
+										<div class="register" style="--x: 74%; --y: 55%;"></div>
+									</div>
+									<div class="room restrooms" style="--x: 6%; --y: 80%; --w: 26%; --h: 12%;">
+										<span class="room-label">Restrooms</span>
+									</div>
+									<div class="entrance" style="--x: 40%; --y: 82%; --w: 16%; --h: 10%;">
+										<span class="room-label">Entrance</span>
+										<div class="door"></div>
+									</div>
+									<div class="wall wall-v" style="--x: 52%; --y: 46%; --w: 1%; --h: 40%;"></div>
+									<div class="wall wall-h" style="--x: 36%; --y: 46%; --w: 22%; --h: 1%;"></div>
+								</div>
+								<div class="markers" id="employeeMarkers"></div>
+								<div class="interaction-markers" id="interactionMarkers"></div>
+								<div class="product-marker" id="productMarker">
+									<span id="productLabel">SKU</span>
+								</div>
+							</div>
+						</div>
+					</section>
+
+					<aside class="employee-right">
+						<div class="employee-right-header">
+							<div>
+								<h2>Accepted tasks</h2>
+								<p>Route preview and next steps</p>
+							</div>
+							<button class="ghost bright" id="toggleEmployeeMap">Show map</button>
+						</div>
+
+						<div class="accepted-list" id="acceptedTasks"></div>
+
+						<div class="route-card">
+							<h3>Suggested route</h3>
+							<ol id="routeSteps"></ol>
+						</div>
+					</aside>
+				</div>
+			</section>
+		</div>
+
+		<script src="../data.js"></script>
+		<script src="staff.js"></script>
+	</body>
+</html>

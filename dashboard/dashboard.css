@@ -71,6 +71,31 @@ body {
 }
 .nav-link:hover { background: var(--gray-100); color: var(--gray-800); }
 .nav-link.active { background: var(--blue-light); color: var(--blue); }
+.nav-link--map {
+  background: linear-gradient(135deg, rgba(37,99,235,.1), rgba(22,163,74,.1));
+  color: var(--blue);
+  border: 1px solid rgba(37,99,235,.2);
+  font-weight: 600;
+}
+.nav-link--map:hover {
+  background: linear-gradient(135deg, rgba(37,99,235,.18), rgba(22,163,74,.18));
+  color: var(--blue);
+  border-color: rgba(37,99,235,.4);
+}
+
+/* Back to main button */
+.btn-back-main {
+  display: inline-flex; align-items: center; gap: 4px;
+  padding: 5px 12px; border-radius: var(--radius-sm);
+  font-size: 12px; font-weight: 500;
+  color: var(--gray-500); text-decoration: none;
+  border: 1px solid var(--gray-200);
+  transition: background var(--transition), color var(--transition), border-color var(--transition);
+  white-space: nowrap;
+}
+.btn-back-main:hover {
+  background: var(--gray-100); color: var(--gray-800); border-color: var(--gray-300);
+}
 
 .header-profile { display: flex; align-items: center; gap: 12px; margin-left: auto; flex-shrink: 0; }
 
